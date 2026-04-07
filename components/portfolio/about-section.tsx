@@ -15,7 +15,6 @@ const skills = [
   { name: "UI Design", level: 98 },
   { name: "UX Strategy", level: 92 },
   { name: "Prototyping", level: 96 },
-  { name: "Design Systems", level: 90 },
   { name: "Figma", level: 98 },
 ]
 
@@ -139,11 +138,8 @@ export function AboutSection() {
               <h3 className="text-2xl font-bold mb-4">
                 I&apos;m Chokdup, a UI/UX Designer passionate about creating impactful digital experiences.
               </h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                With over 3 years of experience in design and visual storytelling, I specialize in helping startups build user-centric applications that drive retention and growth. Based in Thimphu, Bhutan, my approach combines strategic thinking with meticulous attention to detail.
-              </p>
               <p className="text-muted-foreground leading-relaxed">
-                I believe great design is invisible—it simply works. With a background in Interactive Design and Development, every decision I make is rooted in user research, business goals, and a deep understanding of human behavior. My mission is to bridge the gap between user needs and business objectives through thoughtful design.
+                With 3+ years of experience, I help startups build user-centric applications that drive retention and growth. Based in Thimphu, Bhutan, I combine strategic thinking with attention to detail, bridging user needs and business goals through thoughtful, research-driven design.
               </p>
             </div>
 

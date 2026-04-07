@@ -70,7 +70,7 @@ export function ContactSection() {
           >
             <h3 className="text-xl font-bold mb-6">Get in Touch</h3>
             <p className="text-muted-foreground mb-8 leading-relaxed">
-              Whether you&apos;re a startup looking to improve user experience or an established company seeking fresh design perspectives, I&apos;m here to help transform your ideas into exceptional digital products.
+              Looking to improve user experience or need fresh design perspectives? Let&apos;s transform your ideas into exceptional digital products.
             </p>
 
             {/* Contact details */}
@@ -126,7 +126,7 @@ export function ContactSection() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-3"
           >
-            <div className="bg-card rounded-2xl p-8 border border-border/50">
+            <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-8 border border-primary/20">
               {isSubmitted ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -146,46 +146,46 @@ export function ContactSection() {
                   <FieldGroup className="space-y-6">
                     <div className="grid sm:grid-cols-2 gap-6">
                       <Field>
-                        <FieldLabel>Name</FieldLabel>
+                        <FieldLabel className="text-foreground/90">Name</FieldLabel>
                         <Input
                           placeholder="Your name"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           required
-                          className="bg-background border-border/50 focus:border-primary"
+                          className="bg-background/80 border-2 border-primary/30 focus:border-primary hover:border-primary/50 transition-colors placeholder:text-muted-foreground/60"
                         />
                       </Field>
                       <Field>
-                        <FieldLabel>Email</FieldLabel>
+                        <FieldLabel className="text-foreground/90">Email</FieldLabel>
                         <Input
                           type="email"
                           placeholder="your@email.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           required
-                          className="bg-background border-border/50 focus:border-primary"
+                          className="bg-background/80 border-2 border-primary/30 focus:border-primary hover:border-primary/50 transition-colors placeholder:text-muted-foreground/60"
                         />
                       </Field>
                     </div>
                     <Field>
-                      <FieldLabel>Subject</FieldLabel>
+                      <FieldLabel className="text-foreground/90">Subject</FieldLabel>
                       <Input
                         placeholder="Project inquiry"
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         required
-                        className="bg-background border-border/50 focus:border-primary"
+                        className="bg-background/80 border-2 border-primary/30 focus:border-primary hover:border-primary/50 transition-colors placeholder:text-muted-foreground/60"
                       />
                     </Field>
                     <Field>
-                      <FieldLabel>Message</FieldLabel>
+                      <FieldLabel className="text-foreground/90">Message</FieldLabel>
                       <Textarea
                         placeholder="Tell me about your project..."
                         rows={5}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required
-                        className="bg-background border-border/50 focus:border-primary resize-none"
+                        className="bg-background/80 border-2 border-primary/30 focus:border-primary hover:border-primary/50 transition-colors placeholder:text-muted-foreground/60 resize-none"
                       />
                     </Field>
                     <Button

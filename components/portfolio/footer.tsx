@@ -60,21 +60,22 @@ export function Footer() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-3 rounded-xl bg-card border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
+                  className="p-2.5 rounded-lg bg-card border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
                   aria-label={social.label}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-4 h-4" />
                 </motion.a>
               ))}
             </div>
           </motion.div>
 
-          {/* Quick Links */}
+          {/* Quick Links - Centered */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
+            className="text-center"
           >
             <h4 className="font-bold mb-4">Quick Links</h4>
             <nav className="space-y-3">
@@ -94,12 +95,13 @@ export function Footer() {
             </nav>
           </motion.div>
 
-          {/* CTA */}
+          {/* CTA - Right aligned */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
+            className="md:text-right"
           >
             <h4 className="font-bold mb-4">Start a Project</h4>
             <p className="text-muted-foreground text-sm mb-4">

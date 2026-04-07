@@ -37,7 +37,7 @@ const education = [
 ]
 
 const certifications = [
-  { name: "Cisco Networking Academy - Introduction to Cybersecurity", year: "2024" },
+  { name: "Cisco Networking Academy", year: "2024" },
   { name: "UI/UX Design Fundamentals", year: "2023" },
   { name: "Figma Essentials", year: "2023" },
   { name: "Web Design Principles", year: "2022" },

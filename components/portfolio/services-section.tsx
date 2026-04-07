@@ -24,7 +24,7 @@ const services = [
     icon: Users,
     description: "Designing interfaces that keep users coming back through intuitive workflows and delightful experiences.",
     visual: "retention",
-    color: "from-cyan-500/20 to-blue-500/20",
+    color: "from-blue-600/20 to-blue-500/20",
   },
   {
     id: "usability",
@@ -32,15 +32,7 @@ const services = [
     icon: MousePointerClick,
     description: "Enhancing product usability through user research, testing, and iterative design improvements.",
     visual: "usability",
-    color: "from-teal-500/20 to-blue-500/20",
-  },
-  {
-    id: "systems",
-    title: "Design Systems",
-    icon: Palette,
-    description: "Creating scalable design systems that ensure consistency and accelerate product development.",
-    visual: "systems",
-    color: "from-blue-500/20 to-cyan-500/20",
+    color: "from-blue-500/20 to-indigo-500/20",
   },
   {
     id: "mobile",
@@ -48,7 +40,7 @@ const services = [
     icon: Smartphone,
     description: "Designing responsive mobile interfaces that provide seamless experiences across all devices.",
     visual: "mobile",
-    color: "from-cyan-500/20 to-indigo-500/20",
+    color: "from-indigo-500/20 to-blue-600/20",
   },
   {
     id: "webapp",
@@ -56,6 +48,14 @@ const services = [
     icon: Globe,
     description: "Crafting complex web applications that are powerful yet simple to use for diverse user bases.",
     visual: "webapp",
+    color: "from-blue-600/20 to-indigo-500/20",
+  },
+  {
+    id: "systems",
+    title: "Design Systems",
+    icon: Palette,
+    description: "Creating scalable design systems that ensure consistency and accelerate product development.",
+    visual: "systems",
     color: "from-indigo-500/20 to-blue-500/20",
   },
   {
@@ -64,7 +64,7 @@ const services = [
     icon: Heart,
     description: "Designing features that drive meaningful user engagement and create lasting product loyalty.",
     visual: "engagement",
-    color: "from-blue-500/20 to-teal-500/20",
+    color: "from-blue-500/20 to-blue-600/20",
   },
 ]
 
@@ -199,7 +199,7 @@ export function ServicesSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+            className="grid grid-cols-2 sm:grid-cols-3 gap-4"
           >
             {services.map((service, index) => (
               <motion.button
