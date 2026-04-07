@@ -1,9 +1,24 @@
 "use client"
 
+import { useMemo } from "react"
 import { motion } from "framer-motion"
-import { Search, Lightbulb, PenTool, Rocket } from "lucide-react"
+import { Search, Lightbulb, PenTool, Rocket, type LucideIcon } from "lucide-react"
 
-const steps = [
+// Deterministic pseudo-random number generator for consistent SSR/client rendering
+function seededRandom(seed: number) {
+  const x = Math.sin(seed) * 10000
+  return x - Math.floor(x)
+}
+
+interface Step {
+  number: string
+  title: string
+  description: string
+  icon: LucideIcon
+  details: string[]
+}
+
+const steps: Step[] = [
   {
     number: "01",
     title: "Discovery",
@@ -33,6 +48,69 @@ const steps = [
     details: ["Design Specs", "Developer Handoff", "Quality Assurance", "Success Metrics"],
   },
 ]
+
+function ProcessVisual({ step, index }: { step: Step; index: number }) {
+  // Generate deterministic dot positions based on step index
+  const dots = useMemo(() => {
+    return [...Array(12)].map((_, i) => ({
+      left: `${10 + seededRandom(index * 100 + i * 17) * 80}%`,
+      top: `${10 + seededRandom(index * 100 + i * 23) * 80}%`,
+    }))
+  }, [index])
+
+  return (
+    <div
+      className={`${
+        index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
+      } hidden lg:block`}
+    >
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 relative overflow-hidden"
+      >
+        {/* Animated elements */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [0, 180, 360],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="w-32 h-32 border border-primary/20 rounded-full"
+          />
+        </div>
+        <div className="absolute inset-8 flex items-center justify-center">
+          <step.icon className="w-20 h-20 text-primary/30" strokeWidth={1} />
+        </div>
+
+        {/* Decorative dots with deterministic positions */}
+        {dots.map((pos, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-primary/30 rounded-full"
+            style={{
+              left: pos.left,
+              top: pos.top,
+            }}
+            animate={{
+              opacity: [0.2, 0.6, 0.2],
+              scale: [0.8, 1.2, 0.8],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              delay: i * 0.2,
+            }}
+          />
+        ))}
+      </motion.div>
+    </div>
+  )
+}
 
 export function ProcessSection() {
   return (
@@ -121,56 +199,7 @@ export function ProcessSection() {
                 </div>
 
                 {/* Visual */}
-                <div
-                  className={`${
-                    index % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""
-                  } hidden lg:block`}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 relative overflow-hidden"
-                  >
-                    {/* Animated elements */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        animate={{
-                          scale: [1, 1.2, 1],
-                          rotate: [0, 180, 360],
-                        }}
-                        transition={{
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        className="w-32 h-32 border border-primary/20 rounded-full"
-                      />
-                    </div>
-                    <div className="absolute inset-8 flex items-center justify-center">
-                      <step.icon className="w-20 h-20 text-primary/30" strokeWidth={1} />
-                    </div>
-
-                    {/* Decorative dots */}
-                    {[...Array(12)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 bg-primary/30 rounded-full"
-                        style={{
-                          left: `${10 + Math.random() * 80}%`,
-                          top: `${10 + Math.random() * 80}%`,
-                        }}
-                        animate={{
-                          opacity: [0.2, 0.6, 0.2],
-                          scale: [0.8, 1.2, 0.8],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          delay: i * 0.2,
-                        }}
-                      />
-                    ))}
-                  </motion.div>
-                </div>
+                <ProcessVisual step={step} index={index} />
               </motion.div>
             ))}
           </div>
