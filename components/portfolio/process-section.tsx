@@ -51,10 +51,11 @@ const steps: Step[] = [
 
 function ProcessVisual({ step, index }: { step: Step; index: number }) {
   // Generate deterministic dot positions based on step index
+  // Round to 2 decimal places to avoid hydration mismatch from floating point precision
   const dots = useMemo(() => {
     return [...Array(12)].map((_, i) => ({
-      left: `${10 + seededRandom(index * 100 + i * 17) * 80}%`,
-      top: `${10 + seededRandom(index * 100 + i * 23) * 80}%`,
+      left: `${Math.round((10 + seededRandom(index * 100 + i * 17) * 80) * 100) / 100}%`,
+      top: `${Math.round((10 + seededRandom(index * 100 + i * 23) * 80) * 100) / 100}%`,
     }))
   }, [index])
 

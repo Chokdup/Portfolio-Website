@@ -70,10 +70,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
   const [isHovered, setIsHovered] = useState(false)
 
   // Generate deterministic positions based on project id and index
+  // Round to 2 decimal places to avoid hydration mismatch from floating point precision
   const bgElements = useMemo(() => {
     return [...Array(8)].map((_, i) => ({
-      left: `${seededRandom(project.id * 100 + i * 17) * 100}%`,
-      top: `${seededRandom(project.id * 100 + i * 23) * 100}%`,
+      left: `${Math.round(seededRandom(project.id * 100 + i * 17) * 10000) / 100}%`,
+      top: `${Math.round(seededRandom(project.id * 100 + i * 23) * 10000) / 100}%`,
     }))
   }, [project.id])
 

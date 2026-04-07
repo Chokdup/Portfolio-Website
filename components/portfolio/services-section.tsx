@@ -70,13 +70,14 @@ const services = [
 
 function ServiceVisual({ service }: { service: typeof services[0] }) {
   // Generate deterministic particle positions based on service index
+  // Round to integer pixels to avoid hydration mismatch from floating point precision
   const serviceIndex = services.findIndex(s => s.id === service.id)
   const particles = useMemo(() => {
     return [...Array(20)].map((_, i) => ({
-      startX: seededRandom(serviceIndex * 100 + i * 11) * 400,
-      startY: seededRandom(serviceIndex * 100 + i * 13) * 400,
-      endX: seededRandom(serviceIndex * 100 + i * 17) * 400,
-      endY: seededRandom(serviceIndex * 100 + i * 19) * 400,
+      startX: Math.round(seededRandom(serviceIndex * 100 + i * 11) * 400),
+      startY: Math.round(seededRandom(serviceIndex * 100 + i * 13) * 400),
+      endX: Math.round(seededRandom(serviceIndex * 100 + i * 17) * 400),
+      endY: Math.round(seededRandom(serviceIndex * 100 + i * 19) * 400),
     }))
   }, [serviceIndex])
 
