@@ -2,8 +2,10 @@
 
 import { useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ExternalLink, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { projects } from "@/lib/projects-data"
 
 // Deterministic pseudo-random number generator for consistent SSR/client rendering
 function seededRandom(seed: number) {
@@ -12,59 +14,6 @@ function seededRandom(seed: number) {
 }
 
 const categories = ["All", "Web Apps", "Mobile", "Dashboard"]
-
-const projects = [
-  {
-    id: 1,
-    title: "FinTrack Dashboard",
-    category: "Dashboard",
-    description: "A comprehensive financial analytics dashboard that increased user engagement by 45% through intuitive data visualization.",
-    tags: ["Figma", "React", "Data Viz"],
-    metrics: "+45% engagement",
-    image: "/projects/fintrack.jpg",
-    color: "from-cyan-500/20 to-blue-500/20",
-  },
-  {
-    id: 2,
-    title: "HealthSync Mobile",
-    category: "Mobile",
-    description: "Health tracking app that achieved 4.8 star rating through focus on accessibility and seamless user experience.",
-    tags: ["iOS", "Android", "Health Tech"],
-    metrics: "4.8★ rating",
-    image: "/projects/healthsync.jpg",
-    color: "from-indigo-500/20 to-cyan-500/20",
-  },
-  {
-    id: 3,
-    title: "ShopEase E-commerce",
-    category: "Web Apps",
-    description: "E-commerce platform that increased checkout completion by 35% through streamlined purchase flow.",
-    tags: ["E-commerce", "UX Research", "A/B Testing"],
-    metrics: "+35% checkout rate",
-    image: "/projects/shopease.jpg",
-    color: "from-cyan-500/20 to-teal-500/20",
-  },
-  {
-    id: 4,
-    title: "DataVault Analytics",
-    category: "Dashboard",
-    description: "Enterprise analytics platform with complex data sets made accessible through thoughtful information architecture.",
-    tags: ["Enterprise", "Data Design", "B2B"],
-    metrics: "-70% support tickets",
-    image: "/projects/datavault.jpg",
-    color: "from-teal-500/20 to-blue-500/20",
-  },
-  {
-    id: 5,
-    title: "LearnPath Education",
-    category: "Web Apps",
-    description: "Educational platform that increased course completion rates by 55% through gamification and progress tracking.",
-    tags: ["EdTech", "Gamification", "Learning UX"],
-    metrics: "+55% completion",
-    image: "/projects/learnpath.jpg",
-    color: "from-blue-500/20 to-cyan-500/20",
-  },
-]
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const [isHovered, setIsHovered] = useState(false)
@@ -79,119 +28,121 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
   }, [project.id])
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group relative rounded-2xl overflow-hidden"
-    >
-      {/* Card Background */}
-      <div className={`aspect-[4/3] bg-gradient-to-br ${project.color} border border-primary/20 relative`}>
-        {/* Animated background */}
-        <div className="absolute inset-0 overflow-hidden">
-          {bgElements.map((pos, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-32 h-32 border border-primary/10 rounded-lg"
-              style={{
-                left: pos.left,
-                top: pos.top,
-              }}
-              animate={{
-                rotate: [0, 360],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                delay: i * 0.5,
-              }}
-            />
-          ))}
-        </div>
+    <Link href={`/projects/${project.slug}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="group relative rounded-2xl overflow-hidden cursor-pointer"
+      >
+        {/* Card Background */}
+        <div className={`aspect-[4/3] bg-gradient-to-br ${project.color} border border-primary/20 relative`}>
+          {/* Animated background */}
+          <div className="absolute inset-0 overflow-hidden">
+            {bgElements.map((pos, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-32 h-32 border border-primary/10 rounded-lg"
+                style={{
+                  left: pos.left,
+                  top: pos.top,
+                }}
+                animate={{
+                  rotate: [0, 360],
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 20,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                }}
+              />
+            ))}
+          </div>
 
-        {/* Project mockup */}
-        <div className="absolute inset-4 flex items-center justify-center">
+          {/* Project mockup */}
+          <div className="absolute inset-4 flex items-center justify-center">
+            <motion.div
+              animate={{ y: isHovered ? -10 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full max-w-[80%] bg-card/80 backdrop-blur-sm rounded-lg border border-primary/30 shadow-2xl overflow-hidden"
+            >
+              {/* Browser chrome */}
+              <div className="flex items-center gap-2 px-3 py-2 border-b border-border/50 bg-muted/50">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                </div>
+                <div className="flex-1 mx-2">
+                  <div className="h-4 bg-background/50 rounded-sm" />
+                </div>
+              </div>
+              {/* Content placeholder */}
+              <div className="p-4 space-y-3">
+                <div className="h-3 w-3/4 bg-primary/30 rounded" />
+                <div className="h-3 w-1/2 bg-muted/50 rounded" />
+                <div className="grid grid-cols-3 gap-2 mt-4">
+                  <div className="h-12 bg-primary/20 rounded" />
+                  <div className="h-12 bg-primary/15 rounded" />
+                  <div className="h-12 bg-primary/10 rounded" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Metric badge */}
           <motion.div
-            animate={{ y: isHovered ? -10 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="w-full max-w-[80%] bg-card/80 backdrop-blur-sm rounded-lg border border-primary/30 shadow-2xl overflow-hidden"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="absolute top-4 right-4 px-3 py-1.5 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full"
           >
-            {/* Browser chrome */}
-            <div className="flex items-center gap-2 px-3 py-2 border-b border-border/50 bg-muted/50">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-              </div>
-              <div className="flex-1 mx-2">
-                <div className="h-4 bg-background/50 rounded-sm" />
-              </div>
-            </div>
-            {/* Content placeholder */}
-            <div className="p-4 space-y-3">
-              <div className="h-3 w-3/4 bg-primary/30 rounded" />
-              <div className="h-3 w-1/2 bg-muted/50 rounded" />
-              <div className="grid grid-cols-3 gap-2 mt-4">
-                <div className="h-12 bg-primary/20 rounded" />
-                <div className="h-12 bg-primary/15 rounded" />
-                <div className="h-12 bg-primary/10 rounded" />
-              </div>
-            </div>
+            <span className="text-xs font-medium text-primary">{project.metrics}</span>
+          </motion.div>
+
+          {/* Hover overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-background/90 backdrop-blur-sm flex items-center justify-center"
+          >
+            <span className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium flex items-center gap-2">
+              View Case Study
+              <ArrowRight className="w-4 h-4" />
+            </span>
           </motion.div>
         </div>
 
-        {/* Metric badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="absolute top-4 right-4 px-3 py-1.5 bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full"
-        >
-          <span className="text-xs font-medium text-primary">{project.metrics}</span>
-        </motion.div>
-
-        {/* Hover overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="absolute inset-0 bg-background/90 backdrop-blur-sm flex items-center justify-center"
-        >
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-            View Case Study
-            <ExternalLink className="w-4 h-4 ml-2" />
-          </Button>
-        </motion.div>
-      </div>
-
-      {/* Card Content */}
-      <div className="p-6 bg-card border border-t-0 border-primary/10 rounded-b-2xl">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-medium text-primary uppercase tracking-wider">
-            {project.category}
-          </span>
-        </div>
-        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-          {project.title}
-        </h3>
-        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground"
-            >
-              {tag}
+        {/* Card Content */}
+        <div className="p-6 bg-card border border-t-0 border-primary/10 rounded-b-2xl">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-medium text-primary uppercase tracking-wider">
+              {project.category}
             </span>
-          ))}
+          </div>
+          <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs px-2 py-1 bg-muted rounded-md text-muted-foreground"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </Link>
   )
 }
 

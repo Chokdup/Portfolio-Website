@@ -181,7 +181,7 @@ export function ContactSection() {
                       <FieldLabel className="text-foreground/90">Message</FieldLabel>
                       <Textarea
                         placeholder="Tell me about your project..."
-                        rows={5}
+                        rows={4}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required

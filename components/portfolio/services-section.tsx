@@ -35,14 +35,6 @@ const services = [
     color: "from-blue-500/20 to-indigo-500/20",
   },
   {
-    id: "mobile",
-    title: "Mobile Experience",
-    icon: Smartphone,
-    description: "Designing responsive mobile interfaces that provide seamless experiences across all devices.",
-    visual: "mobile",
-    color: "from-indigo-500/20 to-blue-600/20",
-  },
-  {
     id: "webapp",
     title: "Web Application Interfaces",
     icon: Globe,
@@ -57,6 +49,14 @@ const services = [
     description: "Creating scalable design systems that ensure consistency and accelerate product development.",
     visual: "systems",
     color: "from-indigo-500/20 to-blue-500/20",
+  },
+  {
+    id: "mobile",
+    title: "Mobile Experience",
+    icon: Smartphone,
+    description: "Designing responsive mobile interfaces that provide seamless experiences across all devices.",
+    visual: "mobile",
+    color: "from-indigo-500/20 to-blue-600/20",
   },
   {
     id: "engagement",
