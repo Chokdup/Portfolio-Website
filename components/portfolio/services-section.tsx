@@ -35,14 +35,6 @@ const services = [
     color: "from-blue-500/20 to-indigo-500/20",
   },
   {
-    id: "webapp",
-    title: "Web Application Interfaces",
-    icon: Globe,
-    description: "Crafting complex web applications that are powerful yet simple to use for diverse user bases.",
-    visual: "webapp",
-    color: "from-blue-600/20 to-indigo-500/20",
-  },
-  {
     id: "systems",
     title: "Design Systems",
     icon: Palette,
@@ -57,6 +49,14 @@ const services = [
     description: "Designing responsive mobile interfaces that provide seamless experiences across all devices.",
     visual: "mobile",
     color: "from-indigo-500/20 to-blue-600/20",
+  },
+  {
+    id: "webapp",
+    title: "Web Application Interfaces",
+    icon: Globe,
+    description: "Crafting complex web applications that are powerful yet simple to use for diverse user bases.",
+    visual: "webapp",
+    color: "from-blue-600/20 to-indigo-500/20",
   },
   {
     id: "engagement",
