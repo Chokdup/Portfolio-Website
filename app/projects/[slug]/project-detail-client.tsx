@@ -6,13 +6,16 @@ import Link from "next/link"
 import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import type { Project } from "@/lib/projects-data"
+import { ContactModalProvider, useContactModal } from "@/components/portfolio/contact-modal-context"
+import { ContactModal } from "@/components/portfolio/contact-modal"
 
 interface ProjectDetailClientProps {
   project: Project
 }
 
-export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
+function ProjectDetailContent({ project }: ProjectDetailClientProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const { openContactModal } = useContactModal()
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -485,12 +488,14 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               Let&apos;s discuss how thoughtful design can drive results for your product.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/#contact">
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25">
-                  Start a Conversation
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                onClick={openContactModal}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25"
+              >
+                Start a Conversation
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
               <Link href="/projects">
                 <Button variant="outline" size="lg" className="border-primary/30 hover:bg-primary/10">
                   View All Projects
@@ -501,5 +506,14 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
         </div>
       </section>
     </div>
+  )
+}
+
+export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
+  return (
+    <ContactModalProvider>
+      <ContactModal />
+      <ProjectDetailContent project={project} />
+    </ContactModalProvider>
   )
 }

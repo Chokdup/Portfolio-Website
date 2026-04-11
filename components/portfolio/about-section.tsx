@@ -3,6 +3,7 @@
 import { useMemo } from "react"
 import { motion } from "framer-motion"
 import { MapPin, Briefcase, GraduationCap, Award } from "lucide-react"
+import Image from "next/image"
 
 // Deterministic pseudo-random number generator for consistent SSR/client rendering
 function seededRandom(seed: number) {
@@ -66,56 +67,64 @@ export function AboutSection() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
+            {/* Glow effect behind image */}
+            <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/20 rounded-3xl blur-2xl opacity-60" />
+            
             {/* Main image container */}
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
-              {/* Placeholder design - in production this would be an actual image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
-                {/* Abstract profile illustration */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    {/* Head shape */}
-                    <div className="w-32 h-40 bg-foreground/10 rounded-full" />
-                    {/* Shoulders */}
-                    <div className="w-48 h-24 bg-foreground/10 rounded-t-full mt-4 mx-auto" />
-                  </div>
+              {/* Profile Image */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 rounded-2xl">
+                <Image
+                  src="/images/profile.jpg"
+                  alt="Chokdup - UI/UX Designer"
+                  fill
+                  className="object-cover object-center rounded-2xl"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+                
+                {/* Subtle overlay for depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent rounded-2xl" />
+                
+                {/* Decorative particles overlay */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {particles.map((pos, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1 h-1 bg-primary/40 rounded-full"
+                      style={{
+                        left: pos.left,
+                        top: pos.top,
+                      }}
+                      animate={{
+                        opacity: [0.1, 0.5, 0.1],
+                        scale: [0.5, 1.2, 0.5],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: i * 0.15,
+                      }}
+                    />
+                  ))}
                 </div>
-
-                {/* Decorative elements */}
-                {particles.map((pos, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-1 h-1 bg-primary/50 rounded-full"
-                    style={{
-                      left: pos.left,
-                      top: pos.top,
-                    }}
-                    animate={{
-                      opacity: [0.2, 0.8, 0.2],
-                      scale: [0.5, 1.5, 0.5],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      delay: i * 0.15,
-                    }}
-                  />
-                ))}
               </div>
 
-              {/* Floating badge */}
+              {/* Floating badge - Years */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
-                className="absolute -right-4 top-8 bg-card border border-primary/30 rounded-xl p-4 shadow-xl"
+                className="absolute -right-4 top-8 bg-card/95 backdrop-blur-sm border border-primary/30 rounded-xl p-4 shadow-2xl shadow-primary/20"
               >
                 <div className="text-3xl font-bold text-primary">3+</div>
                 <div className="text-xs text-muted-foreground">Years Exp</div>
               </motion.div>
 
+              {/* Floating badge - Projects */}
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 5, repeat: Infinity }}
-                className="absolute -left-4 bottom-12 bg-card border border-primary/30 rounded-xl p-4 shadow-xl"
+                className="absolute -left-4 bottom-12 bg-card/95 backdrop-blur-sm border border-primary/30 rounded-xl p-4 shadow-2xl shadow-primary/20"
               >
                 <div className="text-3xl font-bold text-primary">10+</div>
                 <div className="text-xs text-muted-foreground">Projects</div>

@@ -6,6 +6,8 @@ import { ArrowRight, ArrowLeft, Filter } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { projects } from "@/lib/projects-data"
+import { ContactModalProvider, useContactModal } from "@/components/portfolio/contact-modal-context"
+import { ContactModal } from "@/components/portfolio/contact-modal"
 
 const categories = ["All", "Dashboard", "Mobile", "Web Apps"]
 
@@ -177,9 +179,9 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
   )
 }
 
-export default function ProjectsPage() {
+function ProjectsContent() {
   const [activeCategory, setActiveCategory] = useState("All")
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const { openContactModal } = useContactModal()
 
   const filteredProjects =
     activeCategory === "All"
@@ -338,12 +340,14 @@ export default function ProjectsPage() {
               Let&apos;s discuss how thoughtful design can drive results for your product.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/#contact">
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25">
-                  Start a Conversation
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                onClick={openContactModal}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25"
+              >
+                Start a Conversation
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
               <Link href="/#about">
                 <Button variant="outline" size="lg" className="border-primary/30 hover:bg-primary/10">
                   Learn About Me
@@ -354,5 +358,14 @@ export default function ProjectsPage() {
         </div>
       </section>
     </div>
+  )
+}
+
+export default function ProjectsPage() {
+  return (
+    <ContactModalProvider>
+      <ContactModal />
+      <ProjectsContent />
+    </ContactModalProvider>
   )
 }

@@ -4,8 +4,11 @@ import { motion } from "framer-motion"
 import { ArrowDown, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { FloatingElements } from "./floating-elements"
+import { useContactModal } from "./contact-modal-context"
 
 export function HeroSection() {
+  const { openContactModal } = useContactModal()
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
@@ -100,7 +103,7 @@ export function HeroSection() {
             <Button
               size="lg"
               variant="outline"
-              onClick={() => scrollToSection("#contact")}
+              onClick={openContactModal}
               className="border-primary/30 text-foreground hover:bg-primary/10 px-8 py-6 text-lg"
             >
               Get in Touch

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useContactModal } from "./contact-modal-context"
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -17,6 +18,7 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
+  const { openContactModal } = useContactModal()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,7 +109,7 @@ export function Navigation() {
             {/* CTA Button */}
             <div className="hidden md:block">
               <Button
-                onClick={() => scrollToSection("#contact")}
+                onClick={openContactModal}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25"
               >
                 Get in Touch
@@ -162,7 +164,10 @@ export function Navigation() {
                 transition={{ delay: 0.5 }}
               >
                 <Button
-                  onClick={() => scrollToSection("#contact")}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    openContactModal()
+                  }}
                   size="lg"
                   className="bg-primary text-primary-foreground hover:bg-primary/90"
                 >
