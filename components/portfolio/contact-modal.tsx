@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Send, X, CheckCircle, MessageSquare } from "lucide-react"
+import { Send, X, CheckCircle, MessageSquare, Loader2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -11,6 +11,8 @@ import { useContactModal } from "./contact-modal-context"
 export function ContactModal() {
   const { isOpen, closeContactModal } = useContactModal()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,14 +20,37 @@ export function ContactModal() {
     message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitted(true)
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({ name: "", email: "", subject: "", message: "" })
-      closeContactModal()
-    }, 2500)
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message")
+      }
+
+      setIsSubmitted(true)
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormData({ name: "", email: "", subject: "", message: "" })
+        closeContactModal()
+      }, 2500)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -167,22 +192,45 @@ export function ContactModal() {
                       />
                     </div>
 
+                    {/* Error message */}
+                    {error && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm"
+                      >
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        {error}
+                      </motion.div>
+                    )}
+
                     {/* Actions */}
                     <div className="flex gap-3 pt-2">
                       <Button
                         type="button"
                         variant="outline"
                         onClick={closeContactModal}
+                        disabled={isLoading}
                         className="flex-1 border-border/50 hover:bg-muted text-foreground"
                       >
                         Cancel
                       </Button>
                       <Button
                         type="submit"
+                        disabled={isLoading}
                         className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25"
                       >
-                        <Send className="w-4 h-4 mr-2" />
-                        Send Message
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4 mr-2" />
+                            Send Message
+                          </>
+                        )}
                       </Button>
                     </div>
                   </form>
