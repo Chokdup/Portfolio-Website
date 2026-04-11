@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Send, Mail, MapPin, Clock, CheckCircle } from "lucide-react"
+import { Send, Mail, MapPin, Clock, CheckCircle, Phone, Linkedin, Facebook, Instagram, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -10,8 +10,16 @@ import { FieldGroup, Field, FieldLabel } from "@/components/ui/field"
 
 const contactInfo = [
   { icon: Mail, label: "Email", value: "chokdup15cr@gmail.com", href: "mailto:chokdup15cr@gmail.com" },
+  { icon: Phone, label: "Phone", value: "+975 17388207", href: "tel:+97517388207" },
   { icon: MapPin, label: "Location", value: "Thimphu, Bhutan", href: null },
   { icon: Clock, label: "Availability", value: "Open for projects", href: null },
+]
+
+const socialLinks = [
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/thinleychokdup/", color: "hover:text-[#0077B5]" },
+  { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/thinley.chokdup.4ramos/", color: "hover:text-[#1877F2]" },
+  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/_chokdup/", color: "hover:text-[#E4405F]" },
+  { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/97517388207", color: "hover:text-[#25D366]" },
 ]
 
 export function ContactSection() {
@@ -102,6 +110,31 @@ export function ContactSection() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Social Links */}
+            <div className="mb-8">
+              <h4 className="text-sm font-medium text-muted-foreground mb-4">Connect with me</h4>
+              <div className="flex gap-3">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`p-3 rounded-xl bg-card border border-border/50 text-muted-foreground ${social.color} hover:border-primary/30 transition-colors`}
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </motion.a>
+                ))}
+              </div>
             </div>
 
             {/* Decorative */}

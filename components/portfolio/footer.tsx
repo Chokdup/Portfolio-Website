@@ -4,18 +4,18 @@ import { motion } from "framer-motion"
 import { Linkedin, Facebook, Mail, MessageCircle, Instagram, ArrowUp } from "lucide-react"
 
 const socialLinks = [
-  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/chokdup" },
-  { icon: Facebook, label: "Facebook", href: "https://facebook.com/chokdup" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/thinleychokdup/" },
+  { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/thinley.chokdup.4ramos/" },
   { icon: Mail, label: "Gmail", href: "mailto:chokdup15cr@gmail.com" },
-  { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/1234567890" },
-  { icon: Instagram, label: "Instagram", href: "https://instagram.com/chokdup" },
+  { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/97517388207" },
+  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/_chokdup/" },
 ]
 
 const quickLinks = [
   { label: "Home", href: "#home" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "About", href: "#about" },
-  { label: "Resume", href: "#resume" },
+  { label: "CV", href: "#cv" },
   { label: "Contact", href: "#contact" },
 ]
 

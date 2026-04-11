@@ -1,35 +1,42 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Briefcase, GraduationCap, Download, ExternalLink } from "lucide-react"
+import { Briefcase, GraduationCap, Download, ExternalLink, Award } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const experience = [
   {
     title: "Corporate Video Producer",
     company: "Greener Way",
-    period: "2024 - 2025",
-    description: "Produced compelling corporate videos that effectively communicated brand stories and environmental initiatives. Managed end-to-end production from concept to final delivery.",
-    skills: ["Video Production", "Storytelling", "Project Management"],
+    period: "2024 - Present",
+    description: "Produced a corporate video focusing on clear storytelling and professional visual presentation. Managed the planning, coordination, and creative direction to effectively communicate the organization's mission and environmental initiatives.",
+    skills: ["Video Production", "Storytelling", "Creative Direction"],
   },
   {
     title: "Graphic Designer",
-    company: "AFKxGaming",
+    company: "AFK X Gaming",
     period: "2023 - 2024",
-    description: "Created visual designs for gaming brand including UI elements, marketing materials, and brand assets. Collaborated with teams to deliver engaging visual experiences.",
-    skills: ["Graphic Design", "Brand Identity", "Visual Communication"],
+    description: "Designed promotional posters for Diamond and PUBG recharge services. Focused on clear visual communication, engaging layout, and effective marketing design to attract potential customers.",
+    skills: ["Graphic Design", "Visual Communication", "Marketing Design"],
+  },
+  {
+    title: "Freelance Designer",
+    company: "Self-employed",
+    period: "2023 - Present",
+    description: "Working as a freelance UI/UX designer and web developer, creating user-centered digital products and intuitive interfaces for various clients.",
+    skills: ["UI/UX Design", "Web Development", "Client Management"],
   },
 ]
 
 const education = [
   {
-    degree: "Bachelors of Interactive Design and Development",
-    school: "University",
+    degree: "Bachelor of Interactive Design and Development",
+    school: "Gyalpozhing College of Information Technology",
     period: "2023 - 2027",
-    description: "Focused on user experience design, interactive media, web development, and digital product design.",
+    description: "Focused on UI/UX design, wireframing, prototyping, front-end web development, and creating user-centered digital products.",
   },
   {
-    degree: "High School - Arts",
+    degree: "Arts (Class XII)",
     school: "Karma Academy",
     period: "2022",
     description: "Studied arts and creative disciplines, building foundation in visual design and creative thinking.",
@@ -37,15 +44,27 @@ const education = [
 ]
 
 const certifications = [
-  { name: "Cisco Networking Academy", year: "2024" },
-  { name: "UI/UX Design Fundamentals", year: "2023" },
-  { name: "Figma Essentials", year: "2023" },
-  { name: "Web Design Principles", year: "2022" },
+  { name: "Introduction to Cybersecurity - Cisco Networking Academy", year: "2024" },
+  { name: "De-sung Basic Military Training", year: "2023" },
+]
+
+const achievements = [
+  { name: "Best Project Award - SCAN2DINE", year: "2025", description: "Awarded for developing a QR-based digital menu web application" },
+  { name: "International Cultural Exchange - Japan", year: "2016", description: "Selected for a two-week cultural exchange program" },
 ]
 
 export function ResumeSection() {
+  const handleDownloadCV = () => {
+    const link = document.createElement("a")
+    link.href = "/Thinley-Chokdup-CV.pdf"
+    link.download = "Thinley-Chokdup-CV.pdf"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
-    <section id="resume" className="py-24 lg:py-32 relative">
+    <section id="cv" className="py-24 lg:py-32 relative">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
@@ -60,7 +79,7 @@ export function ResumeSection() {
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-medium uppercase tracking-widest">
-            Resume
+            Curriculum Vitae
           </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mt-4 mb-6 text-balance">
             Experience & Education
@@ -68,9 +87,12 @@ export function ResumeSection() {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8 text-pretty">
             A journey of continuous learning and impactful design work.
           </p>
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+          <Button 
+            onClick={handleDownloadCV}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+          >
             <Download className="w-4 h-4 mr-2" />
-            Download Resume
+            Download CV
           </Button>
         </motion.div>
 
@@ -180,7 +202,7 @@ export function ResumeSection() {
             </div>
 
             {/* Certifications */}
-            <div>
+            <div className="mb-12">
               <h3 className="text-xl font-bold mb-6">Certifications</h3>
               <div className="grid gap-3">
                 {certifications.map((cert, index) => (
@@ -194,6 +216,34 @@ export function ResumeSection() {
                   >
                     <span className="font-medium text-sm">{cert.name}</span>
                     <span className="text-xs text-primary">{cert.year}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Achievements */}
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Award className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">Achievements</h3>
+              </div>
+              <div className="grid gap-3">
+                {achievements.map((achievement, index) => (
+                  <motion.div
+                    key={achievement.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <span className="font-medium text-sm">{achievement.name}</span>
+                      <span className="text-xs text-primary shrink-0">{achievement.year}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{achievement.description}</p>
                   </motion.div>
                 ))}
               </div>
