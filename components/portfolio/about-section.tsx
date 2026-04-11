@@ -68,36 +68,46 @@ export function AboutSection() {
             className="relative"
           >
             {/* Glow effect behind image */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/20 rounded-3xl blur-2xl opacity-60" />
+            <div className="absolute -inset-4 bg-gradient-to-br from-primary/30 via-primary/15 to-accent/25 rounded-3xl blur-2xl opacity-70" />
             
             {/* Main image container */}
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               {/* Profile Image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 rounded-2xl">
+              <div className="absolute inset-0 border-2 border-primary/40 rounded-2xl shadow-2xl shadow-primary/20">
+                {/* Dark background layer */}
+                <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/20 rounded-2xl" />
+                
                 <Image
                   src="/images/profile.jpg"
                   alt="Chokdup - UI/UX Designer"
                   fill
-                  className="object-cover object-center rounded-2xl"
+                  className="object-cover object-top rounded-2xl mix-blend-luminosity opacity-90"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />
                 
-                {/* Subtle overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent rounded-2xl" />
+                {/* Color overlay for dark theme integration */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15 rounded-2xl mix-blend-overlay" />
+                
+                {/* Vignette effect for depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-background/40 rounded-2xl" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.4)_100%)] rounded-2xl" />
+                
+                {/* Subtle inner glow */}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/20" />
                 
                 {/* Decorative particles overlay */}
                 <div className="absolute inset-0 pointer-events-none">
                   {particles.map((pos, i) => (
                     <motion.div
                       key={i}
-                      className="absolute w-1 h-1 bg-primary/40 rounded-full"
+                      className="absolute w-1 h-1 bg-primary/50 rounded-full"
                       style={{
                         left: pos.left,
                         top: pos.top,
                       }}
                       animate={{
-                        opacity: [0.1, 0.5, 0.1],
+                        opacity: [0.2, 0.6, 0.2],
                         scale: [0.5, 1.2, 0.5],
                       }}
                       transition={{
