@@ -67,48 +67,70 @@ export function AboutSection() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            {/* Glow effect behind image */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-primary/30 via-primary/15 to-accent/25 rounded-3xl blur-2xl opacity-70" />
+            {/* Animated glow effect behind image */}
+            <motion.div 
+              className="absolute -inset-6 rounded-3xl blur-3xl opacity-60"
+              style={{
+                background: "radial-gradient(ellipse at center, rgba(0, 102, 255, 0.3) 0%, rgba(0, 102, 255, 0.1) 40%, transparent 70%)",
+              }}
+              animate={{
+                opacity: [0.4, 0.7, 0.4],
+                scale: [1, 1.05, 1],
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
             
             {/* Main image container */}
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
               {/* Profile Image */}
-              <div className="absolute inset-0 border-2 border-primary/40 rounded-2xl shadow-2xl shadow-primary/20">
-                {/* Dark background layer */}
-                <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-primary/20 rounded-2xl" />
+              <div className="absolute inset-0 border-2 border-primary/50 rounded-2xl shadow-2xl shadow-primary/30">
+                {/* Solid dark background base */}
+                <div className="absolute inset-0 bg-[#0a0a12] rounded-2xl" />
                 
+                {/* Geometric accent shapes */}
+                <div className="absolute top-0 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-primary/20 to-transparent rounded-2xl" />
+                <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-tr from-primary/15 to-transparent rounded-2xl" />
+                
+                {/* Profile image with dark blend */}
                 <Image
                   src="/images/profile.jpg"
                   alt="Chokdup - UI/UX Designer"
                   fill
-                  className="object-cover object-top rounded-2xl mix-blend-luminosity opacity-90"
+                  className="object-cover object-top rounded-2xl"
+                  style={{
+                    filter: "brightness(0.85) contrast(1.1) saturate(0.9)",
+                  }}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />
                 
-                {/* Color overlay for dark theme integration */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/15 rounded-2xl mix-blend-overlay" />
+                {/* Dark color wash overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a18]/60 via-transparent to-[#0a0a18]/50 rounded-2xl mix-blend-multiply" />
                 
-                {/* Vignette effect for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-background/40 rounded-2xl" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.4)_100%)] rounded-2xl" />
+                {/* Blue tint overlay for tech aesthetic */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/25 via-primary/5 to-primary/15 rounded-2xl mix-blend-color" />
                 
-                {/* Subtle inner glow */}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/20" />
+                {/* Strong vignette for depth */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.6)_100%)] rounded-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/30 rounded-2xl" />
                 
-                {/* Decorative particles overlay */}
+                {/* Inner border glow */}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/30" />
+                <div className="absolute inset-[1px] rounded-2xl ring-1 ring-inset ring-white/5" />
+                
+                {/* Decorative floating particles */}
                 <div className="absolute inset-0 pointer-events-none">
                   {particles.map((pos, i) => (
                     <motion.div
                       key={i}
-                      className="absolute w-1 h-1 bg-primary/50 rounded-full"
+                      className="absolute w-1 h-1 bg-primary/60 rounded-full shadow-sm shadow-primary/50"
                       style={{
                         left: pos.left,
                         top: pos.top,
                       }}
                       animate={{
-                        opacity: [0.2, 0.6, 0.2],
-                        scale: [0.5, 1.2, 0.5],
+                        opacity: [0.2, 0.8, 0.2],
+                        scale: [0.5, 1.5, 0.5],
                       }}
                       transition={{
                         duration: 3,
