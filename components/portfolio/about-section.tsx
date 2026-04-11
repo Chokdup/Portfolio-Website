@@ -65,11 +65,11 @@ export function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative"
+            className="relative flex justify-center lg:justify-start"
           >
             {/* Animated glow effect behind image */}
             <motion.div 
-              className="absolute -inset-6 rounded-3xl blur-3xl opacity-60"
+              className="absolute -inset-6 rounded-3xl blur-3xl opacity-60 max-w-[320px] mx-auto lg:mx-0"
               style={{
                 background: "radial-gradient(ellipse at center, rgba(0, 102, 255, 0.3) 0%, rgba(0, 102, 255, 0.1) 40%, transparent 70%)",
               }}
@@ -81,7 +81,7 @@ export function AboutSection() {
             />
             
             {/* Main image container */}
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
+            <div className="relative aspect-[3/4] w-full max-w-[320px] rounded-2xl overflow-hidden">
               {/* Profile Image */}
               <div className="absolute inset-0 border-2 border-primary/50 rounded-2xl shadow-2xl shadow-primary/30">
                 {/* Solid dark background base */}
