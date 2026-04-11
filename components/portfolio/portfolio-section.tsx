@@ -227,14 +227,16 @@ export function PortfolioSection() {
           transition={{ duration: 0.6 }}
           className="text-center mt-12"
         >
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-primary/30 hover:bg-primary/10 group"
-          >
-            View All Projects
-            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/projects">
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-primary/30 hover:bg-primary/10 group"
+            >
+              View All Projects
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </section>
