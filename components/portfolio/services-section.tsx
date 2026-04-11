@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Users,
@@ -11,155 +11,97 @@ import {
   Heart,
 } from "lucide-react"
 
-// Deterministic pseudo-random number generator for consistent SSR/client rendering
-function seededRandom(seed: number) {
-  const x = Math.sin(seed) * 10000
-  return x - Math.floor(x)
-}
-
 const services = [
   {
     id: "retention",
     title: "User Retention",
     icon: Users,
     description: "Designing interfaces that keep users coming back through intuitive workflows and delightful experiences.",
-    visual: "retention",
-    color: "from-blue-600/20 to-blue-500/20",
+    image: "/images/expertise-retention.jpg",
   },
   {
     id: "usability",
     title: "Product Usability",
     icon: MousePointerClick,
     description: "Enhancing product usability through user research, testing, and iterative design improvements.",
-    visual: "usability",
-    color: "from-blue-500/20 to-indigo-500/20",
+    image: "/images/expertise-usability.jpg",
   },
   {
     id: "systems",
     title: "Design Systems",
     icon: Palette,
     description: "Creating scalable design systems that ensure consistency and accelerate product development.",
-    visual: "systems",
-    color: "from-indigo-500/20 to-blue-500/20",
+    image: "/images/expertise-systems.jpg",
   },
   {
     id: "mobile",
     title: "Mobile Experience",
     icon: Smartphone,
     description: "Designing responsive mobile interfaces that provide seamless experiences across all devices.",
-    visual: "mobile",
-    color: "from-indigo-500/20 to-blue-600/20",
+    image: "/images/expertise-mobile.jpg",
   },
   {
     id: "webapp",
     title: "Web Application Interfaces",
     icon: Globe,
     description: "Crafting complex web applications that are powerful yet simple to use for diverse user bases.",
-    visual: "webapp",
-    color: "from-blue-600/20 to-indigo-500/20",
+    image: "/images/expertise-webapp.jpg",
   },
   {
     id: "engagement",
     title: "User Engagement",
     icon: Heart,
     description: "Designing features that drive meaningful user engagement and create lasting product loyalty.",
-    visual: "engagement",
-    color: "from-blue-500/20 to-blue-600/20",
+    image: "/images/expertise-engagement.jpg",
   },
 ]
 
 function ServiceVisual({ service }: { service: typeof services[0] }) {
-  // Generate deterministic particle positions based on service index
-  // Round to integer pixels to avoid hydration mismatch from floating point precision
-  const serviceIndex = services.findIndex(s => s.id === service.id)
-  const particles = useMemo(() => {
-    return [...Array(20)].map((_, i) => ({
-      startX: Math.round(seededRandom(serviceIndex * 100 + i * 11) * 400),
-      startY: Math.round(seededRandom(serviceIndex * 100 + i * 13) * 400),
-      endX: Math.round(seededRandom(serviceIndex * 100 + i * 17) * 400),
-      endY: Math.round(seededRandom(serviceIndex * 100 + i * 19) * 400),
-    }))
-  }, [serviceIndex])
-
   return (
     <motion.div
       key={service.id}
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.5 }}
-      className={`relative w-full h-full rounded-2xl bg-gradient-to-br ${service.color} border border-primary/20 overflow-hidden`}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4 }}
+      whileHover={{ scale: 1.02 }}
+      className="relative w-full h-full rounded-2xl border border-primary/20 overflow-hidden group cursor-pointer"
     >
-      {/* Animated background pattern */}
-      <div className="absolute inset-0">
-        {particles.map((particle, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full"
-            initial={{
-              x: particle.startX,
-              y: particle.startY,
-              opacity: 0,
-            }}
-            animate={{
-              x: particle.endX,
-              y: particle.endY,
-              opacity: [0, 0.5, 0],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              delay: i * 0.2,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Service icon */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: "spring", delay: 0.2 }}
-        >
-          <service.icon className="w-24 h-24 text-primary/40" strokeWidth={1} />
-        </motion.div>
-      </div>
-
-      {/* UI mockup elements */}
-      <div className="absolute bottom-8 left-8 right-8">
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="bg-card/60 backdrop-blur-sm rounded-lg p-4 border border-primary/20"
-        >
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center">
-              <service.icon className="w-4 h-4 text-primary" />
-            </div>
-            <div>
-              <div className="h-2 w-24 bg-foreground/30 rounded" />
-              <div className="h-2 w-16 bg-muted-foreground/30 rounded mt-1" />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <div className="h-2 w-full bg-muted/50 rounded" />
-            <div className="h-2 w-3/4 bg-muted/30 rounded" />
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Floating elements */}
+      {/* Image with hover zoom */}
+      <motion.img
+        src={service.image}
+        alt={`${service.title} illustration`}
+        className="absolute inset-0 w-full h-full object-cover"
+        initial={{ scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      />
+      
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/20 to-transparent opacity-50 group-hover:opacity-30 transition-opacity duration-400" />
+      
+      {/* Glow effect on hover */}
+      <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-400" />
+      
+      {/* Icon badge */}
       <motion.div
-        className="absolute top-8 right-8 w-16 h-16 rounded-lg bg-primary/20 border border-primary/30"
-        animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute bottom-4 right-4 p-3 rounded-xl bg-background/80 backdrop-blur-sm border border-primary/30"
+        whileHover={{ scale: 1.1, rotate: 5 }}
+        transition={{ duration: 0.3 }}
+      >
+        <service.icon className="w-6 h-6 text-primary" />
+      </motion.div>
+      
+      {/* Floating accent elements */}
+      <motion.div
+        className="absolute top-6 right-6 w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 backdrop-blur-sm"
+        animate={{ y: [0, -8, 0], rotate: [0, 3, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute top-20 left-8 w-12 h-12 rounded-full bg-accent/20 border border-accent/30"
-        animate={{ y: [0, 10, 0], x: [0, 5, 0] }}
-        transition={{ duration: 5, repeat: Infinity }}
+        className="absolute top-16 left-6 w-8 h-8 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm"
+        animate={{ y: [0, 8, 0], x: [0, 4, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
     </motion.div>
   )
