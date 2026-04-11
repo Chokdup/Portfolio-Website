@@ -1,14 +1,7 @@
 "use client"
 
-import { useMemo } from "react"
 import { motion } from "framer-motion"
 import { Search, Lightbulb, PenTool, Rocket, type LucideIcon } from "lucide-react"
-
-// Deterministic pseudo-random number generator for consistent SSR/client rendering
-function seededRandom(seed: number) {
-  const x = Math.sin(seed) * 10000
-  return x - Math.floor(x)
-}
 
 interface Step {
   number: string
@@ -16,6 +9,7 @@ interface Step {
   description: string
   icon: LucideIcon
   details: string[]
+  image: string
 }
 
 const steps: Step[] = [
@@ -25,6 +19,7 @@ const steps: Step[] = [
     description: "Deep dive into understanding your business goals, target users, and market landscape through research and stakeholder interviews.",
     icon: Search,
     details: ["User Research", "Competitive Analysis", "Stakeholder Interviews", "Goal Definition"],
+    image: "/images/process-discovery.jpg",
   },
   {
     number: "02",
@@ -32,6 +27,7 @@ const steps: Step[] = [
     description: "Synthesize research insights into actionable strategies, defining user journeys and information architecture.",
     icon: Lightbulb,
     details: ["User Personas", "Journey Mapping", "Information Architecture", "Feature Prioritization"],
+    image: "/images/process-strategy.jpg",
   },
   {
     number: "03",
@@ -39,6 +35,7 @@ const steps: Step[] = [
     description: "Create intuitive interfaces through iterative design, from wireframes to high-fidelity prototypes with user validation.",
     icon: PenTool,
     details: ["Wireframing", "Visual Design", "Prototyping", "Usability Testing"],
+    image: "/images/process-design.jpg",
   },
   {
     number: "04",
@@ -46,19 +43,11 @@ const steps: Step[] = [
     description: "Hand off polished designs with comprehensive documentation, supporting development and measuring success post-launch.",
     icon: Rocket,
     details: ["Design Specs", "Developer Handoff", "Quality Assurance", "Success Metrics"],
+    image: "/images/process-delivery.jpg",
   },
 ]
 
 function ProcessVisual({ step, index }: { step: Step; index: number }) {
-  // Generate deterministic dot positions based on step index
-  // Round to 2 decimal places to avoid hydration mismatch from floating point precision
-  const dots = useMemo(() => {
-    return [...Array(12)].map((_, i) => ({
-      left: `${Math.round((10 + seededRandom(index * 100 + i * 17) * 80) * 100) / 100}%`,
-      top: `${Math.round((10 + seededRandom(index * 100 + i * 23) * 80) * 100) / 100}%`,
-    }))
-  }, [index])
-
   return (
     <div
       className={`${
@@ -66,48 +55,42 @@ function ProcessVisual({ step, index }: { step: Step; index: number }) {
       } hidden lg:block`}
     >
       <motion.div
-        whileHover={{ scale: 1.02 }}
-        className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20 relative overflow-hidden"
+        whileHover={{ scale: 1.03 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="aspect-[4/3] rounded-2xl border border-primary/20 relative overflow-hidden group cursor-pointer"
       >
-        {/* Animated elements */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Image with hover animation */}
+        <motion.img
+          src={step.image}
+          alt={`${step.title} process illustration`}
+          className="absolute inset-0 w-full h-full object-cover"
+          initial={{ scale: 1 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        />
+        
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-400" />
+        
+        {/* Glow effect on hover */}
+        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-400" />
+        
+        {/* Icon overlay */}
+        <div className="absolute bottom-4 right-4">
           <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="w-32 h-32 border border-primary/20 rounded-full"
-          />
+            className="p-3 rounded-xl bg-background/80 backdrop-blur-sm border border-primary/30"
+            whileHover={{ scale: 1.1, rotate: 5 }}
+          >
+            <step.icon className="w-6 h-6 text-primary" />
+          </motion.div>
         </div>
-        <div className="absolute inset-8 flex items-center justify-center">
-          <step.icon className="w-20 h-20 text-primary/30" strokeWidth={1} />
+        
+        {/* Step number */}
+        <div className="absolute top-4 left-4">
+          <span className="text-5xl font-bold text-primary/20 group-hover:text-primary/40 transition-colors duration-400">
+            {step.number}
+          </span>
         </div>
-
-        {/* Decorative dots with deterministic positions */}
-        {dots.map((pos, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-primary/30 rounded-full"
-            style={{
-              left: pos.left,
-              top: pos.top,
-            }}
-            animate={{
-              opacity: [0.2, 0.6, 0.2],
-              scale: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              delay: i * 0.2,
-            }}
-          />
-        ))}
       </motion.div>
     </div>
   )
