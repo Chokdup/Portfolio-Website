@@ -193,14 +193,14 @@ export function ServicesSection() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Service Cards */}
+        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-start">
+          {/* Service Cards - 3x3 Grid */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+            className="grid grid-cols-3 gap-3"
           >
             {services.map((service, index) => (
               <motion.button
@@ -210,15 +210,15 @@ export function ServicesSection() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => setSelectedService(service)}
-                className={`group relative p-4 rounded-xl border transition-all duration-300 text-left ${
+                className={`group relative p-3 rounded-xl border transition-all duration-300 text-left ${
                   selectedService.id === service.id
                     ? "bg-primary/10 border-primary/50 shadow-lg shadow-primary/10"
                     : "bg-card/50 border-border/50 hover:border-primary/30 hover:bg-card"
                 }`}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col items-center gap-2 text-center">
                   <div
-                    className={`p-2 rounded-lg transition-colors ${
+                    className={`p-2.5 rounded-lg transition-colors ${
                       selectedService.id === service.id
                         ? "bg-primary/20 text-primary"
                         : "bg-muted text-muted-foreground group-hover:text-primary"
@@ -227,7 +227,7 @@ export function ServicesSection() {
                     <service.icon className="w-5 h-5" />
                   </div>
                   <span
-                    className={`text-sm font-medium transition-colors ${
+                    className={`text-xs font-medium transition-colors leading-tight ${
                       selectedService.id === service.id
                         ? "text-foreground"
                         : "text-muted-foreground group-hover:text-foreground"
@@ -255,10 +255,10 @@ export function ServicesSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="space-y-6"
+            className="space-y-5"
           >
-            {/* Visual */}
-            <div className="aspect-[4/3] relative">
+            {/* Visual - Adjusted aspect ratio */}
+            <div className="aspect-[16/10] relative">
               <AnimatePresence mode="wait">
                 <ServiceVisual service={selectedService} />
               </AnimatePresence>
@@ -273,8 +273,8 @@ export function ServicesSection() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-2xl font-bold mb-3">{selectedService.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold mb-2">{selectedService.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {selectedService.description}
                 </p>
               </motion.div>
